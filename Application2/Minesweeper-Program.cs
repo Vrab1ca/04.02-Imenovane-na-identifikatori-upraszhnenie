@@ -69,13 +69,13 @@ namespace Minesweeper
                 if (flag)
                 {
                     Console.WriteLine(
-                        "Хайде да играем на “Minesweeper”. Пробвай си касмета да откриеш полетата без Minesweeper. " + 
-                        " Команда 'top' показжа класирането, 'restart' почва нова игра, 'exit' излиза и хайде чао!");
+                        "Let's play “Minesweeper”. Try your luck at finding the fields without Minesweeper. " +
+                         " Command 'top' shows the ranking, 'restart' starts a new game, 'exit' exits and bye!");
                     dumpp(field);
                     flag = false;
                 }
 
-                Console.Write("Дай red и column : ");
+                Console.Write("Give red и column : ");
                 command = Console.ReadLine().Trim();
                 if (command.Length >= 3)
                 {
@@ -99,7 +99,7 @@ namespace Minesweeper
                         flag = false;
                         break;
                     case "exit":
-                        Console.WriteLine("Чао, Чао, Чао!");
+                        Console.WriteLine("Bye, bye, bye!");
                         break;
                     case "turn":
                         if (Bomb[red, column] != '*')
@@ -126,14 +126,14 @@ namespace Minesweeper
 
                         break;
                     default:
-                        Console.WriteLine("\nГрешка! невалидна команда\n");
+                        Console.WriteLine("\nError! invalid command\n");
                         break;
                 }
 
                 if (explosion)
                 {
                     dumpp(Bomb);
-                    Console.Write("\nХрррррррр! Умря героя с {0} точки. " + "Дай си никнейм: ", counter);
+                    Console.Write("\nHrrrrrrrr! The hero died with {0} points. " + "Give yourself a nickname: ", counter);
                     string nickname = Console.ReadLine();
                     ForTheList t = new ForTheList(nickname, counter);
                     if (champions.Count < 5)
@@ -166,9 +166,9 @@ namespace Minesweeper
 
                 if (flag2)
                 {
-                    Console.WriteLine("\nБРАВОООО! Отвори 35 клетки без капка кръв.");
+                    Console.WriteLine("\nBRAVOOOOO! Opened 35 cells without a drop of blood.");
                     dumpp(Bomb);
-                    Console.WriteLine("Дай си името, батка: ");
+                    Console.WriteLine("Give me your name, brother: ");
                     string imeee = Console.ReadLine();
                     ForTheList to4kii = new ForTheList(imeee, counter);
                     champions.Add(to4kii);
@@ -182,25 +182,24 @@ namespace Minesweeper
             }
             while (command != "exit");
             Console.WriteLine("Made in Bulgaria - Uauahahahahaha!");
-            Console.WriteLine("АРЕЕЕЕЕЕеееееее.");
+            Console.WriteLine("Leeettssss'ggoooooo");
             Console.Read();
         }
-
         private static void ranking(List<ForTheList> to4kii)
         {
-            Console.WriteLine("\nТочки:");
+            Console.WriteLine("\nPoints:");
             if (to4kii.Count > 0)
             {
                 for (int i = 0; i < to4kii.Count; i++)
                 {
-                    Console.WriteLine("{0}. {1} --> {2} кутия", i + 1, to4kii[i].Player, to4kii[i].Howmuch);
+                    Console.WriteLine("{0}. {1} --> {2} box", i + 1, to4kii[i].Player, to4kii[i].Howmuch);
                 }
 
                 Console.WriteLine();
             }
             else
             {
-                Console.WriteLine("празна класация\n");
+                Console.WriteLine("empty ranking\n");
             }
         }
 
@@ -291,24 +290,6 @@ namespace Minesweeper
             }
 
             return playing_field;
-        }
-
-        private static void bill(char[,] pole)
-        {
-            int Col = pole.GetLength(0);
-            int red = pole.GetLength(1);
-
-            for (int i = 0; i < Col; i++)
-            {
-                for (int j = 0; j < red; j++)
-                {
-                    if (pole[i, j] != '*')
-                    {
-                        char Howmucho = Howmuch(pole, i, j);
-                        pole[i, j] = Howmucho;
-                    }
-                }
-            }
         }
 
         private static char Howmuch(char[,] PL, int BN, int R)

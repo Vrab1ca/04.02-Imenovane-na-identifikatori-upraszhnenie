@@ -10,13 +10,13 @@ namespace Orders
         static void Main()
         {
             Thread.CurrentThread.CurrentCulture = CultureInfo.InvariantCulture;
-            var mp = new dataMapper();
-            var Cate = mp.getAllCategories();
-            var Pro = mp.getAllProducts();
-            var Ord1 = mp.getAllOrders();
+            var DATAMP = new dataMapper();
+            var Categories = DATAMP.getAllCategories();
+            var Products = DATAMP.getAllProducts();
+            var Orders = DATAMP.getAllOrders();
 
             // Names of the 5 most expensive products
-            var first = Pro
+            var first = Products
                 .OrderByDescending(p => p.unit_price)
                 .Take(5)
                 .Select(p => p.nome);
@@ -25,9 +25,9 @@ namespace Orders
             Console.WriteLine(new string('-', 10));
 
             // Number of products in each category
-            var second = Pro
+            var second = Products
                 .GroupBy(p => p.catId)
-                .Select(grp => new { Category = Cate.First(c => c.Id == grp.Key).NAME, Count = grp.Count() })
+                .Select(grp => new { Category = Categories.First(c => c.Id == grp.Key).NAME, Count = grp.Count() })
                 .ToList();
             foreach (var item in second)
             {
@@ -37,9 +37,9 @@ namespace Orders
             Console.WriteLine(new string('-', 10));
 
             // The 5 top products (by order quantity)
-            var third = Ord1
+            var third = Orders
                 .GroupBy(o => o.product_id)
-                .Select(grp => new { Product = Pro.First(p => p.id == grp.Key).nome, Quantities = grp.Sum(grpgrp => grpgrp.quant) })
+                .Select(grp => new { Product = Products.First(p => p.id == grp.Key).nome, Quantities = grp.Sum(grpgrp => grpgrp.quant) })
                 .OrderByDescending(q => q.Quantities)
                 .Take(5);
             foreach (var item in third)
@@ -50,11 +50,11 @@ namespace Orders
             Console.WriteLine(new string('-', 10));
 
             // The most profitable category
-            var category = Ord1
+            var category = Orders
                 .GroupBy(o => o.product_id)
-                .Select(g => new { catId = Pro.First(p => p.id == g.Key).catId, price = Pro.First(p => p.id == g.Key).unit_price, quantity = g.Sum(p => p.quant) })
+                .Select(g => new { catId = Products.First(p => p.id == g.Key).catId, price = Products.First(p => p.id == g.Key).unit_price, quantity = g.Sum(p => p.quant) })
                 .GroupBy(gg => gg.catId)
-                .Select(grp => new { category_name = Cate.First(c => c.Id == grp.Key).NAME, total_quantity = grp.Sum(g => g.quantity * g.price) })
+                .Select(grp => new { category_name = Categories.First(c => c.Id == grp.Key).NAME, total_quantity = grp.Sum(g => g.quantity * g.price) })
                 .OrderByDescending(g => g.total_quantity)
                 .First();
             Console.WriteLine("{0}: {1}", category.category_name, category.total_quantity);
